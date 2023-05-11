@@ -5,7 +5,7 @@ import LandingPage from './LandingPage';
 describe('Landing Page', () => {
 
   test('contains a header with "My Recipes" text', async () => {
-    render(<LandingPage />);
+    await render(<LandingPage />);
     screen.getByRole('heading');
     await screen.findByText('My Recipes')
       .then(text => {
@@ -15,9 +15,19 @@ describe('Landing Page', () => {
   })
 
   test('contains "There are no recipes to list" text', async () => {
-    render(<LandingPage />);
+    await render(<LandingPage />);
     const element = screen.getByText('There are no recipes to list');
     expect(element).toBeInTheDocument();
+  })
+
+  test('contains an "add recipe" button', async () => {
+    await render(<LandingPage />);
+    const header = screen.getByRole('heading');
+    const button = screen.getByRole('button');
+    const text = screen.getByText('Add Recipe');
+    expect(button).toBeInTheDocument();
+    expect(text).toBeInTheDocument();
+    expect(header.compareDocumentPosition(button)).toBe(4);
   })
 
 })
